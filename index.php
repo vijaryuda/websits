@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'dbconnect.php';
+$validate = '';
 
 if(isset($_SESSION['role'])){
 	header("location:stock");
@@ -35,24 +36,20 @@ if($cek > 0){
  
 	$data = mysqli_fetch_assoc($login);
  
- if($data['role']==$data['role']){
+        $data['role']==$data['role'];
 		// buat session login dan username
 		$_SESSION['user'] = $data['nickname'];
 		$_SESSION['user_login'] = $data['username'];
 		$_SESSION['id'] = $data['id'];
 		$_SESSION['role'] = $data['role'];
 		header("location:stock");
-
  }
- else
- {
-  header("location:index.php?pesan=gagal");
-
- }
- 
+ else{
+    $validate = 'Username atau Password Salah !!';
+}
 }
 
-}
+
 
 
 ?>
@@ -101,6 +98,9 @@ if($cek > 0){
                 <div style="color:white">
                     <!-- <label>Login information for Demo :</label><br \> <label>Username &
                     Password : guest</label><br \> -->
+                    <?php if($validate != '') {?>
+                            <p class="text-danger"><?= $validate; ?></p>
+                        <?php }?>
                 </div>
                 <form method="post">
                     <div class="form-group">
@@ -119,7 +119,6 @@ if($cek > 0){
                             name="password">
                     </div>
                     <button type="submit" class="btn btn-primary" name="btn-login">Masuk</button>
-
                 </form>
 								<br \="\"><br \="\">
                 <form action="register.php">
