@@ -29,7 +29,6 @@
 
     if(isset($_POST['hapus'])){
         $idx = $_POST['idx'];
-
         $delete = mysqli_query($conn,"DELETE FROM operator_dokgiat where idx='$idx'");
         // //hapus juga semua data barang ini di tabel keluar-masuk
          $deltabelkeluar = mysqli_query($conn,"delete from sbrg_keluar where id='$idx'");
@@ -331,7 +330,6 @@
                                     <h3>
                                         <div class="date">
                                             <script type='text/javascript'>
-                                                <!--
                                                 var months = [
                                                     'Januari',
                                                     'Februari',
@@ -484,11 +482,11 @@
                                                                     id="tanggal"
                                                                     name="tanggal"
                                                                     class="form-control"
-                                                                    value="<?php echo $p['tanggal'] ?>">
+                                                                    value="<?php echo $p['tanggal'] ?>" required>
 
                                                                 <label for="id">id</label>
-                                                                <select name="id" class="custom-select form-control">
-                                                                    <option selected="selected">Pilih ID Lokasi</option>
+                                                                <select name="id" class="custom-select form-control" required>
+                                                                    <option value="" disabled selected>Pilih ID Lokasi</option>
                                                                     <?php
                                                                         $det=mysqli_query($conn,"select * from lokasi order by ID ASC");
                                                                         while($d=mysqli_fetch_array($det)){
@@ -505,7 +503,7 @@
                                                                     id="keterangan"
                                                                     name="keterangan"
                                                                     class="form-control"
-                                                                    value="<?php echo $p['keterangan'] ?>">
+                                                                    value="<?php echo $p['keterangan'] ?>" required>
                                                                 <input type="hidden" name="idx" value="<?=$idb;?>">
 
                                                                 <input type="hidden" name="idx" value="<?=$idb;?>">
@@ -598,10 +596,10 @@
                             placeholder="dd/mm/yyyy"
                             required="required">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" required="required">
                             <label>ID & Lokasi</label>
-                            <select name="id" class="custom-select form-control">
-                                <option selected="selected">Pilih ID Lokasi</option>
+                            <select name="id" class="custom-select form-control" required>
+                                <option value="">Pilih ID Lokasi</option>
                                 <?php
 									$det=mysqli_query($conn,"select * from lokasi order by ID ASC");
 									while($d=mysqli_fetch_array($det)){
@@ -614,7 +612,7 @@
                         </div>
                     <div class="form-group">
                         <label>Keterangan</label>
-                    <input name="keterangan" id="keterangan" type="text" class="form-control">
+                    <input name="keterangan" id="keterangan" type="text" class="form-control" required="required">
                 </div>
 
 
