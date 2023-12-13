@@ -493,11 +493,11 @@
 								</div>
 								<div class="form-group">
 									<label>Lokasi</label>
-									<input name="lokasi" type="text" class="form-control">
+									<input name="lokasi" type="text" class="form-control" required>
 								</div>
                                 <div class="form-group">
 									<label>Keterangan</label>
-									<input name="keterangan" type="text" class="form-control">
+									<input name="keterangan" type="text" class="form-control" required>
 								</div>
                                 </div>
 							<div class="modal-footer">
