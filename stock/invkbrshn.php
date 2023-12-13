@@ -6,15 +6,11 @@
     include 'cek.php';
 
     if(isset($_POST['update'])){
-        $idx = $_POST['idbrg'];
-        $nama = $_POST['nama'];
-        $jenis = $_POST['jenis'];
-        $dokumentasi = $_FILES['dokumentasi'];
-        $ukuran = $_POST['ukuran'];
-        $satuan = $_POST['satuan'];
-        $lokasi = $_POST['lokasi'];
+        $idx = $_POST['idx'];
+        $nama_barang = $_POST['nama_barang'];
+        $stock = $_POST['stock'];
 
-        $updatedata = mysqli_query($conn,"update sstock_brg set nama='$nama', jenis='$jenis', dokumentasi='$dokumentasi', ukuran='$ukuran', satuan='$satuan', lokasi='$lokasi' where idx='$idx'");
+        $updatedata = mysqli_query($conn,"update sits_invkbrshn set tanggal='$tanggal',nama_baramg='$nama_barang', stock='$stock'");
         
         //cek apakah berhasil
         if ($updatedata){
@@ -22,21 +18,21 @@
             echo " <div class='alert alert-success'>
                 <strong>Success!</strong> Redirecting you back in 1 seconds.
               </div>
-            <meta http-equiv='refresh' content='1; url= stock.php'/>  ";
+            <meta http-equiv='refresh' content='1; url= sits_invkbrshn.php'/>  ";
             } else { echo "<div class='alert alert-warning'>
                 <strong>Failed!</strong> Redirecting you back in 1 seconds.
               </div>
-             <meta http-equiv='refresh' content='1; url= stock.php'/> ";
+             <meta http-equiv='refresh' content='1; url= sits_invkbrshn.php'/> ";
             }
     };
 
     if(isset($_POST['hapus'])){
-        $idx = $_POST['idbrg'];
+        $idx = $_POST['idx'];
 
-        $delete = mysqli_query($conn,"delete from sstock_brg where idx='$idx'");
-        //hapus juga semua data barang ini di tabel keluar-masuk
-        $deltabelkeluar = mysqli_query($conn,"delete from sbrg_keluar where id='$idx'");
-        $deltabelmasuk = mysqli_query($conn,"delete from sbrg_masuk where id='$idx'");
+        $delete = mysqli_query($conn,"delete from sits_invkbrshn where idx='$idx'");
+        // //hapus juga semua data barang ini di tabel keluar-masuk
+        $deltabelkeluar = mysqli_query($conn,"delete from sbrg_keluar where idx='$idx'");
+        $deltabelmasuk = mysqli_query($conn,"delete from sbrg_masuk where idx='$idx'");
         
         //cek apakah berhasil
         if ($delete && $deltabelkeluar && $deltabelmasuk){
@@ -44,11 +40,11 @@
             echo " <div class='alert alert-success'>
                 <strong>Success!</strong> Redirecting you back in 1 seconds.
               </div>
-            <meta http-equiv='refresh' content='1; url= stock.php'/>  ";
+            <meta http-equiv='refresh' content='1; url= sits_invkbrshn.php'/>  ";
             } else { echo "<div class='alert alert-warning'>
                 <strong>Failed!</strong> Redirecting you back in 1 seconds.
               </div>
-             <meta http-equiv='refresh' content='1; url= stock.php'/> ";
+             <meta http-equiv='refresh' content='1; url= sits_invkbrshn.php'/> ";
             }
     };
 	?>
@@ -59,7 +55,7 @@
       type="image/png" 
       href="../favicon.png">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Logistics</title>
+    <title>SITS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -107,63 +103,181 @@
     <!-- preloader area end -->
     <!-- page container area start -->
     <div class="page-container">
-        <!-- sidebar menu area start -->
-<div class="sidebar-menu">
-<div class="sidebar-header">
-</div>
-<div class="main-menu">
-    <div class="menu-inner">
-        <nav>
-            <ul class="metismenu" id="menu">
-            <li><a href="index.php"><i class="ti-control-stop"></i><span>Beranda</span></a></li>
-            <li>
-                    <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout"></i><span>SITS
-                        </span></a>
-                    <ul class="collapse">
-                        <li><a href="invbrg.php">Inventaris Barang</a></li>
-                        <li><a href="bukutamu.php">Buku Tamu Pengembalian Rekaman</a></li>
-                        <li class="active"><a href="invkbrshn.php">Inventaris Alat Kebersihan</a></li>
-                    </ul>
-                </li>	
-                <li>
-                    <a href="operator.php"><i class="ti-shine"></i><span>Operator</span></a>
-                </li>
-                <li>
-                    <a href="javascript:void(0)" aria-expanded="true"><i class="ti-check-box"></i><span>Evaluator
-                        </span></a>
-                    <ul class="collapse">
-                        <li><a href="masuk.php">Dokumentasi Giat</a></li>
-                        <li><a href="masuk.php">Inventaris Evaluator</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0)" aria-expanded="true"><i class="ti-video-camera"></i><span>CCTV
-                        </span></a>
-                    <ul class="collapse">
-                        <li><a href="masuk.php">Dokumentasi Giat</a></li>
-                        <li><a href="masuk.php">Inventaris CCTV</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="stock.php"><i class="ti-shine"></i><span>Traffic</span></a>
-                </li>
-                <li>
-                    <a href="stock.php"><i class="ti-line-dashed"></i><span>Marka</span></a>
-                </li>
-                <li>
-                    <a href="stock.php"><i class="ti-direction-alt"></i><span>Rambu</span></a>
-                </li>
-                <li>
-                    <a href="logout.php"><span>Logout</span></a>
-                    
-                </li>
-                
-            </ul>
-        </nav>
-    </div>
-</div>
-</div>
-<!-- sidebar menu area end -->
+          <!-- sidebar menu area start -->
+      <div class="sidebar-menu">
+                <div class="sidebar-header"></div>
+                <div class="main-menu">
+                    <div class="menu-inner">
+                        <nav>
+                            <ul class="metismenu" id="menu">
+                                <li>
+                                    <a href="index.php">
+                                        <i class="ti-control-stop"></i>
+                                        <span>Beranda</span></a>
+                                </li>
+                                <li  class="active">
+                                    <a href="javascript:void(0)" aria-expanded="true">
+                                        <i class="ti-layout"></i>
+                                        <span>SITS
+                                        </span>
+                                    </a>
+                                    <ul class="collapse">
+                                        <li>
+                                            <a href="sits_bukutamu.php">Buku Tamu Pengambilan Rekaman</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)">Inventaris Server</a>
+                                            <ul class="collapse">
+                                                <li >
+                                                    <a href="stocksits.php">Stock</a>
+                                                </li>
+                                                <li>
+                                                    <a href="masuksits.php">Masuk</a>
+                                                </li>
+                                                <l>
+                                                    <a href="keluarsits.php">Keluar</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="active">
+                                            <a href="javascript:void(0)">Inventaris Alat Kebersihan</a>
+                                            <ul class="collapse">
+                                                <li class="active">
+                                                    <a href="sits_invkbrshn.php">Stock</a>
+                                                </li>
+                                                <li>
+                                                    <a href="masukkbrshn.php">Masuk</a>
+                                                </li>
+                                                <li>
+                                                    <a href="keluarkbrshn.php">Keluar</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="operator.php">
+                                        <i class="ti-shine"></i>
+                                        <span>Operator</span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" aria-expanded="true">
+                                        <i class="ti-check-box"></i>
+                                        <span>Evaluator
+                                        </span>
+                                    </a>
+                                    <ul class="collapse">
+                                        <li>
+                                            <a href="eva_dokgiat.php">Dokumentasi Giat</a>
+                                        </li>
+                                        <li>
+                                                <a href="javascript:void(0)" aria-expanded="true">Inventaris Evaluator</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="eva_inven_stock.php">Stock</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="eva_inven_masuk.php">Masuk</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="eva_inven_keluar.php">Keluar</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" aria-expanded="true">
+                                        <i class="ti-video-camera"></i>
+                                        <span>CCTV
+                                        </span>
+                                    </a>
+                                    <ul class="collapse">
+                                        <li>
+                                            <a href="javascript:void(0)" aria-expanded="true">
+                                                <i class="ti-video-camera"></i>
+                                                <span>Dokumentasi Giat
+                                                </span>
+                                            </a>
+                                            <ul class="collapse">
+                                                <li>
+                                                    <a href="cctv_dokgiat_satgas.php">Giat Satgas</a>
+                                                </li>
+                                                <li>
+                                                    <a href="cctv_dokgiat_pemasangan.php">Giat Pemasangan CCTV</a>
+                                                </li>
+                                                <li>
+                                                    <a href="cctv_dokgiat_koordinir.php">Giat Mengkoordinir Satgas</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" aria-expanded="true">
+                                                <i class="ti-video-camera"></i>
+                                                <span>Inventaris CCTV
+                                                </span>
+                                            </a>
+                                            <ul class="collapse">
+                                                <li>
+                                                    <a href="javascript:void(0)" aria-expanded="true">Stock CCTV</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="cctv_inven_stockcctv.php">Stock</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cctv_inven_masukcctv.php">Masuk</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cctv_inven_keluarcctv.php">Keluar</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)" aria-expanded="true">Stock Material</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="cctv_inven_stockmaterial.php">Stock</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cctv_inven_masukmaterial.php">Masuk</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="cctv_inven_keluarmaterial.php">Keluar</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="traffic.php">
+                                        <i class="ti-shine"></i>
+                                        <span>Traffic</span></a>
+                                </li>
+                                <li>
+                                    <a href="marka.php">
+                                        <i class="ti-line-dashed"></i>
+                                        <span>Marka</span></a>
+                                </li>
+                                <li>
+                                    <a href="rambu.php">
+                                        <i class="ti-direction-alt"></i>
+                                        <span>Rambu</span></a>
+                                </li>
+                                <li>
+                                    <a href="logout.php">
+                                        <span>Logout</span></a>
+
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- sidebar menu area end -->
         <!-- main content area start -->
         <div class="main-content">
             <!-- header area start -->
@@ -187,7 +301,6 @@
                         <ul class="notification-area pull-right">
                             <li><h3><div class="date">
 								<script type='text/javascript'>
-						<!--
 						var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 						var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 						var date = new Date();
@@ -209,7 +322,7 @@
             <!-- header area end -->
 			<?php 
 			
-				$periksa_bahan=mysqli_query($conn,"select * from sstock_brg where stock <1");
+				$periksa_bahan=mysqli_query($conn,"select * from sits_invkbrshn where stock <1");
 				while($p=mysqli_fetch_array($periksa_bahan)){	
 					if($p['stock']<=1){	
 						?>	
@@ -220,7 +333,7 @@
 							});
 						</script>
 						<?php
-						echo "<div class='alert alert-danger alert-dismissible fade show'><button type='button' class='close' data-dismiss='alert'>&times;</button>Stok  <strong><u>".$p['nama']. "</u> <u>".($p['dokumentasi'])."</u> &nbsp <u>".$p['ukuran']."</u></strong> yang tersisa sudah habis</div>";		
+						echo "<div class='alert alert-danger alert-dismissible fade show'><button type='button' class='close' data-dismiss='alert'>&times;</button>Stok  <strong><u>".$p['tanggal']. "</u> <u>".($p['nama_barang'])."</u> &nbsp <u>".$p['stock']."</u></strong> yang tersisa sudah habis</div>";		
 					}
 				}
 				?>
@@ -233,14 +346,14 @@
                             <h4 class="page-title pull-left">Dashboard</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="index.php">Home</a></li>
-                                <li><span>Daftar Barang</span></li>
+                                <li><span>Daftar Inventaris Alat Kebersihan</span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-6 clearfix">
-                        <div class="user-profile pull-right" style="color:black; padding:0px;">
+                        <!-- <div class="user-profile pull-right" style="color:black; padding:0px;">
                             <img src="log.jpg" width="220px" class="user-name dropdown-toggle" data-toggle="dropdown"\>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -253,25 +366,20 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-sm-flex justify-content-between align-items-center">
-									<h2>Daftar Barang</h2>
+									<h2>Daftar Inventaris Alat Kebersihan</h2>
 									<button style="margin-bottom:20px" data-toggle="modal" data-target="#myModal" class="btn btn-info col-md-2"><span class="glyphicon glyphicon-plus"></span>Tambah Barang</button>
                                 </div>
                                     <div class="data-tables datatable-dark">
 										 <table id="dataTable3" class="display" style="width:100%"><thead class="thead-dark">
 											<tr>
 												<th>No</th>
+                                                <th>Tanggal</th>
 												<th>Nama Barang</th>
-												<th>Jenis</th>
-												<th>dokumentasi</th>
-												<th>Ukuran</th>
-												<th>Stock</th>
-												<th>Satuan</th>
-												<th>Lokasi</th>
-												
-												<th>Opsi</th>
+												<th>Jumlah</th>
+                                                <th>Opsi</th>
 											</tr></thead><tbody>
 											<?php 
-											$brgs=mysqli_query($conn,"SELECT * from sstock_brg order by idx ASC");
+											$brgs=mysqli_query($conn,"SELECT * from sits_invkbrshn order by idx ASC");
 											$no=1;
 											while($p=mysqli_fetch_array($brgs)){
                                                 $idb = $p['idx'];
@@ -279,17 +387,9 @@
 												
 												<tr>
 													<td><?php echo $no++ ?></td>
-													<td><?php echo $p['nama'] ?></td>
-													<td><?php echo $p['jenis'] ?></td>
-													<td>
-                                                        <a href="assets/images/<?= $p['dokumentasi']; ?>" target="_blank">
-                                                        <img src="assets/images/<?= $p['dokumentasi']; ?>" style="width: 100px;">
-                                                    </a>
-                                                    </td>
-													<td><?php echo $p['ukuran'] ?></td>
+                                                    <td><?php echo $p['tanggal'] ?></td>
+													<td><?php echo $p['nama_barang'] ?></td>
 													<td><?php echo $p['stock'] ?></td>
-													<td><?php echo $p['satuan'] ?></td>
-													<td><?php echo $p['lokasi'] ?></td>
                                                     <td><button data-toggle="modal" data-target="#edit<?=$idb;?>" class="btn btn-warning">Edit</button> <button data-toggle="modal" data-target="#del<?=$idb;?>" class="btn btn-danger">Del</button></td>
 												</tr>
 
@@ -301,37 +401,25 @@
                                                         <form method="post">
                                                             <!-- Modal Header -->
                                                             <div class="modal-header">
-                                                            <h4 class="modal-title">Edit Barang <?php echo $p['nama']?> - <?php echo $p['jenis']?> - <?php echo $p['ukuran']?></h4>
+                                                            <h4 class="modal-title">Edit Barang <?php echo $p['tanggal']?> - 
+                                                                                                <?php echo $p['nama_barang']?> - 
+                                                                                                <?php echo $p['stock']?></h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                             </div>
                                                             
                                                             <!-- Modal body -->
                                                             <div class="modal-body">
+
+                                                            <label for="tanggal">Tanggal</label>
+                                                            <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?php echo $p['tanggal'] ?>">
                                                             
-                                                            <label for="nama">Nama</label>
-                                                            <input type="text" id="nama" name="nama" class="form-control" value="<?php echo $p['nama'] ?>">
+                                                            <label for="nama_barang">Nama</label>
+                                                            <input type="text" id="nama_barang" name="nama" class="form-control" value="<?php echo $p['nama_barang'] ?>">
 
-                                                            <label for="jenis">Jenis</label>
-                                                            <input type="text" id="jenis" name="jenis" class="form-control" value="<?php echo $p['jenis'] ?>">
+                                                            <label for="stock"></label>
+                                                            <input type="number" id="stock" name="stock" class="form-control" value="<?php echo $p['stock'] ?>" hidden>
 
-                                                            <label for="dokumentasi">dokumentasi</label>
-                                                            <input type="text" id="dokumentasi" name="dokumentasi" class="form-control" value="<?php echo $p['dokumentasi'] ?>">
-
-                                                            <label for="ukuran">Ukuran</label>
-                                                            <input type="text" id="ukuran" name="ukuran" class="form-control" value="<?php echo $p['ukuran'] ?>">
-
-                                                            <label for="stock">Stock</label>
-                                                            <input type="text" id="stock" name="stock" class="form-control" value="<?php echo $p['stock'] ?>" disabled>
-
-                                                            <label for="satuan">Satuan</label>
-                                                            <input type="text" id="satuan" name="satuan" class="form-control" value="<?php echo $p['satuan'] ?>">
-
-                                                            <label for="lokasi">Lokasi</label>
-                                                            <input type="text" id="lokasi" name="lokasi" class="form-control" value="<?php echo $p['lokasi'] ?>">
-                                                            <input type="hidden" name="idbrg" value="<?=$idb;?>">
-
-                                                            
-                                                            </div>
+                                                        </div>
                                                             
                                                             <!-- Modal footer -->
                                                             <div class="modal-footer">
@@ -352,14 +440,14 @@
                                                         <form method="post">
                                                             <!-- Modal Header -->
                                                             <div class="modal-header">
-                                                            <h4 class="modal-title">Hapus Barang <?php echo $p['nama']?> - <?php echo $p['jenis']?> - <?php echo $p['ukuran']?></h4>
+                                                            <h4 class="modal-title">Hapus Barang <?php echo $p['tanggal']?> - <?php echo $p['nama_barang']?> - <?php echo $p['stock']?></h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                             </div>
                                                             
                                                             <!-- Modal body -->
                                                             <div class="modal-body">
-                                                            Apakah Anda yakin ingin menghapus barang ini dari daftar stock?
-                                                            <input type="hidden" name="idbrg" value="<?=$idb;?>">
+                                                            Apakah Anda yakin ingin menghapus ini?
+                                                            <input type="hidden" name="idx" value="<?=$idb;?>">
                                                             </div>
                                                             
                                                             <!-- Modal footer -->
@@ -379,7 +467,7 @@
 										</tbody>
 										</table>
                                     </div>
-									<a href="exportstkbhn.php" target="_blank" class="btn btn-info">Export Data</a>
+									<a href="export_sits_invkbrshan.php" target="_blank" class="btn btn-info">Export Data</a>
                                 </div>
                             </div>
                         </div>
@@ -406,44 +494,20 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title">Masukkan stok manual</h4>
+							<h4 class="modal-title">Masukkan Data</h4>
 						</div>
 						<div class="modal-body">
-							<form action="tmb_brg_act.php" method="post" enctype="multipart/form-data">
+							<form action="tmb_sits_invkbrshn.php" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+									<label>Tanggal</label>
+									<input name="tanggal" type="date" class="form-control" placeholder="Masukkan Tanggal" required>
+								</div>
 								<div class="form-group">
 									<label>Nama</label>
-									<input name="nama" type="text" class="form-control" placeholder="Nama Barang" required>
+									<input name="nama_barang" type="text" class="form-control" placeholder="Nama Barang" required>
 								</div>
 								<div class="form-group">
-									<label>Jenis</label>
-									<input name="jenis" type="text" class="form-control" placeholder="Jenis / Kategori Barang">
-								</div>
-								<div class="form-group">
-									<label>dokumentasi</label>
-									<input name="dokumentasi" type="file" class="form-control" placeholder="dokumentasi Barang">
-								</div>
-								<div class="form-group">
-									<label>Ukuran</label>
-									<input name="ukuran" type="text" class="form-control" placeholder="Ukuran">
-								</div>
-								<div class="form-group">
-									<label>Stock</label>
-									<input name="stock" type="number" min="0" class="form-control" placeholder="Qty">
-								</div>
-								<div class="form-group">
-									<label>Satuan</label>
-									<select name="satuan" class="custom-select form-control">
-									<option selected>Pilih satuan</option>
-									<option value="Buah">Buah</option>
-									<option value="Unit">Unit</option>
-									<option value="Meter">Meter</option>
-									<option value="Milimeter">Centimeter</option>
-									<option value="Milimeter">Milimeter</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label>Lokasi</label>
-									<input name="lokasi" type="text" class="form-control" placeholder="Lokasi barang">
+									<input name="stock" type="number" min="0" class="form-control" placeholder="Qty" hidden>
 								</div>
 
 							</div>
