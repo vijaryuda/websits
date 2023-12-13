@@ -388,10 +388,10 @@
                                                             <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?php echo $p['tanggal'] ?>">
                                                             
                                                             <label for="lokasi">Lokasi</label>
-                                                            <input type="text" id="lokasi" name="lokasi" class="form-control" value="<?php echo $p['lokasi'] ?>">
+                                                            <input type="text" id="lokasi" name="lokasi" class="form-control" value="<?php echo $p['lokasi'] ?>" required>
 
                                                             <label for="kegiatan">Kegiatan</label>
-                                                            <input type="text" id="kegiatan" name="kegiatan" class="form-control" value="<?php echo $p['kegiatan'] ?>">
+                                                            <input type="text" id="kegiatan" name="kegiatan" class="form-control" value="<?php echo $p['kegiatan'] ?>" required>
                                                             <input type="hidden" name="idx" value="<?=$idb;?>">
                                                         </div>
                                                             
@@ -482,7 +482,7 @@
 								</div>
 								<div class="form-group">
 									<label>Kegiatan</label>
-									<input name="kegiatan" type="text" min="0" class="form-control" placeholder="Kegiatan">
+									<input name="kegiatan" type="text" min="0" class="form-control" placeholder="Kegiatan" required>
 								</div>
 
 							</div>
